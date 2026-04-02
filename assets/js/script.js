@@ -9,6 +9,21 @@ const navMenu = document.querySelector(".nav-menu");
 // TODO: Toggle 'is-open' on navMenu when navToggle is clicked
 // TODO: Close the menu when clicking outside of it — look up element.contains()
 // TODO: Close the menu on window resize when viewport reaches desktop width
+navToggle.addEventListener("click", () => {
+  navMenu.classList.toggle("is-open");
+});
+
+document.addEventListener("click", (event) => {
+  if (!navMenu.contains(event.target) && !navToggle.contains(event.target)) {
+    navMenu.classList.remove("is-open");
+  }
+});
+
+window.addEventListener("resize", () => {
+  if (window.innerWidth >= 700) {
+    navMenu.classList.remove("is-open");
+  }
+})
 
 // -- Challenge 2: Image Carousel --
 
@@ -22,6 +37,25 @@ const dotsContainer = document.querySelector(".carousel-dots");
 // TODO: Write showSlide(index) — move the track with translateX, keep index in bounds
 // TODO: Wire up prevBtn and nextBtn clicks to call showSlide with the updated index
 // Extra: generate a dot button per slide inside dotsContainer, keep the active dot in sync
+let slideIndex = 0;
+
+function showSlide(index) {
+  carouselTrack.style.transform = `translateX(-${index * 100}%)`;
+}
+nextBtn.addEventListener("click", () => {
+    slideIndex+=1;
+    if(slideIndex >= 6) {
+      slideIndex = 0;
+    }
+    showSlide(slideIndex);
+  })
+  prevBtn.addEventListener("click", () => {
+    slideIndex-=1;
+    if(slideIndex < 0) {
+      slideIndex = 5;
+    }
+    showSlide(slideIndex);
+  })
 
 // -- Challenge 3: Username Validation --
 
